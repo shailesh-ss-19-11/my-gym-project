@@ -8,11 +8,20 @@ import DEMO from "../../../../../store/constant";
 import Avatar1 from '../../../../../assets/images/user/avatar-1.jpg';
 import Avatar2 from '../../../../../assets/images/user/avatar-2.jpg';
 import Avatar3 from '../../../../../assets/images/user/avatar-3.jpg';
+import CustomerRegistration from '../../../../components/customer/CustomerRegistration';
 
 class NavRight extends Component {
     state = {
-        listOpen: false
+        listOpen: false,
+        show:false
     };
+
+    registermodal = ()=>{
+        this.setState({show:true});
+    }
+    hideModal = ()=>{
+        this.setState({show:false});
+    }
     logout=()=>{
         localStorage.removeItem("token");
         window.location.reload();
@@ -82,6 +91,9 @@ class NavRight extends Component {
                     <li className={this.props.rtlLayout ? 'm-r-15' : 'm-l-15'}>
                         <a href={DEMO.BLANK_LINK} className="displayChatbox" onClick={() => {this.setState({listOpen: true});}}><i className="icon feather icon-mail"/></a>
                     </li>
+                    <li className={this.props.rtlLayout ? 'm-r-15' : 'm-l-15'}>
+                        <a href={DEMO.BLANK_LINK} className="displayChatbox" onClick={this.registermodal}><i className="icon feather icon-user"/></a>
+                    </li>
                     <li>
                         <Dropdown alignRight={!this.props.rtlLayout} className="drp-user">
                             <Dropdown.Toggle variant={'link'} id="dropdown-basic">
@@ -106,6 +118,7 @@ class NavRight extends Component {
                     </li>
                 </ul>
                 <ChatList listOpen={this.state.listOpen} closed={() => {this.setState({listOpen: false});}} />
+                <CustomerRegistration show={this.state.show} handleClose={this.hideModal}/>
             </Aux>
         );
     }
